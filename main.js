@@ -71,7 +71,9 @@ createPlayer("player2", Player2);
 const btnCame = document.querySelector(".button");
 
 const playerFiate = (player) => {
-    const $playerHP = document.querySelector('.player' + player.player + ' .life')
+    const $playerHP = document.querySelector(
+        ".player" + player.player + " .life"
+    );
 
     player.hp = player.hp - Math.ceil(Math.random() * 20);
     if (player.hp <= 0) {
@@ -80,39 +82,14 @@ const playerFiate = (player) => {
     } else {
         $playerHP.style.width = player.hp + "%";
     }
-}
-
-
-
-
+};
 
 btnCame.addEventListener("click", function() {
-    const $player1HP = document.querySelectorAll(".life")[0];
-    const $player2HP = document.querySelectorAll(".life")[1];
-
-    // Player1.hp = Player1.hp - Math.ceil(Math.random() * 20);
-    // if (Player1.hp <= 0) {
-    //     Player1.hp = 0;
-    //     $player1HP.style.width = Player1.hp + "%";
-    // } else {
-    //     $player1HP.style.width = Player1.hp + "%";
-    // }
-
-    // Player2.hp = Player2.hp - Math.ceil(Math.random() * 20);
-    // if (Player2.hp <= 0) {
-    //     Player2.hp = 0;
-    //     $player2HP.style.width = Player2.hp + "%";
-    // } else {
-    //     $player2HP.style.width = Player2.hp + "%";
-    // }
-
-    // console.log(Player2.hp, Player1.hp);
-    playerFiate(Player2)
-    playerFiate(Player1)
+    playerFiate(Player2);
+    playerFiate(Player1);
 
     if (Player2.hp == 0 || Player1.hp == 0) {
         btnCame.disabled = true;
-
         const $createWins = document.createElement("h1");
         const $playerWins = document.querySelector(".control");
 
