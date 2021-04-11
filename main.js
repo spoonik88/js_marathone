@@ -1,8 +1,9 @@
 const Player1 = {
     name: "Scorpion",
-    hp: 80,
+    hp: 100,
     img: "http://reactmarathon-api.herokuapp.com/assets/scorpion.gif",
     weapon: ["Blade"],
+    player: 1,
     attack: function() {
         console.log(this.name + " " + "Fight...");
     },
@@ -10,22 +11,39 @@ const Player1 = {
 
 const Player2 = {
     name: "Subzero",
-    hp: 85,
+    hp: 100,
     img: "http://reactmarathon-api.herokuapp.com/assets/subzero.gif",
     weapon: ["Ice scepter"],
+    player: 2,
     attack: function() {
         console.log(this.name + " " + "Fight...");
     },
 };
 
 
+const $playerLeft = document.querySelector(".arenas");
+
+const btnHtmlCreate = () => {
+
+    $playerLeft.insertAdjacentHTML(
+        "afterbegin",
+        `
+<div class="control">
+    <button class="button">
+        Random
+    </button>
+</div>
+`
+    );
+}
+btnHtmlCreate();
 
 
 
 
 const createPlayer = (playerNumber, player) => {
 
-    const $playerLeft = document.querySelector(".arenas");
+
     const $player = document.createElement('div');
     const $progressbar = document.createElement('div');
     const $playerLife = document.createElement('div');
@@ -38,7 +56,8 @@ const createPlayer = (playerNumber, player) => {
 
     $playerLife.classList.add('life');
     $playerLife.setAttribute('value', player.hp);
-    $playerLife.style.width = "100%";
+
+
 
     $playerName.classList.add('name');
     $playerName.innerText = player.name;
@@ -56,8 +75,54 @@ const createPlayer = (playerNumber, player) => {
     $progressbar.appendChild($playerName);
     $character.appendChild($playerImg);
 
-
-
 }
 createPlayer('player1', Player1);
 createPlayer('player2', Player2);
+
+
+const btnCame = document.querySelector(".button");
+
+
+console.log(Player2.hp)
+btnCame.addEventListener('click', function() {
+
+    const $player1HP = document.querySelectorAll(".life")[0]
+    const $player2HP = document.querySelectorAll(".life")[1]
+
+
+    Player1.hp = Player1.hp - Math.ceil(Math.random() * 20)
+    if (Player1.hp <= 0) {
+        console.log("ghbdtn");
+        Player1.hp = 0
+        $player1HP.style.width = Player1.hp + "%";
+    } else {
+        $player1HP.style.width = Player1.hp + "%";
+    }
+
+    Player2.hp = Player2.hp - Math.ceil(Math.random() * 20)
+    if (Player2.hp <= 0) {
+        Player2.hp = 0
+        $player2HP.style.width = Player2.hp + "%";
+    } else {
+        $player2HP.style.width = Player2.hp + "%";
+    }
+
+
+    console.log(Player2.hp, Player1.hp);
+    if (Player2.hp == 0 || Player1.hp == 0) {
+        btnCame.disabled = true
+
+        if (Player2.hp > Player1.hp) {
+            console.log(Player2.name + " " + "win")
+
+        } else if (Player2.hp === Player1.hp) {
+            console.log("draw")
+        } else {
+            console.log(Player1.name + " " + "win")
+        }
+
+    }
+
+
+
+})
